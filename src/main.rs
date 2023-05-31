@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy_ecs_ldtk::prelude::*;
+use bevy_editor_pls::prelude::*;
 use bevy::window::PrimaryWindow;
 
 fn main() {
@@ -11,9 +12,10 @@ fn main() {
             }),
             ..default() 
         }))
+        .add_plugin(EditorPlugin::default())
         .add_plugin(LdtkPlugin)
         .add_startup_system(setup)
-        .add_startup_system(zoom_camera.after(setup))
+        //.add_startup_system(zoom_camera.after(setup))
         .insert_resource(LevelSelection::Index(0))
         .run();
 }
@@ -28,10 +30,11 @@ fn setup(
 ) {
     let window: &Window = window_query.get_single().unwrap();
     commands.spawn((
-        Camera2dBundle {
-            transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 0.0),
-            ..default()
-        },
+        //Camera2dBundle {
+        //    transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 0.0),
+        //    ..default()
+        //},
+        Camera2dBundle::default(),
         MyGameCamera,
     ));
 
@@ -41,11 +44,11 @@ fn setup(
     });
 }
 
-fn zoom_camera(
-    mut camera_query: Query<&mut OrthographicProjection, With<Camera2d>>,
-) {
-    let mut projection = camera_query.single_mut();
-
-    projection.scale = 0.5;
-
-}
+//fn zoom_camera(
+//    mut camera_query: Query<&mut OrthographicProjection, With<Camera2d>>,
+//) {
+//    let mut projection = camera_query.single_mut();
+//
+//    projection.scale = 0.5;
+//
+//}
